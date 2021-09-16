@@ -2,13 +2,12 @@ package scripts.scripter_app.crafter.data;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Optional;
-
-import org.tribot.script.sdk.Inventory;
 
 import scripts.scripter_app.crafter.data.object.UncutGem;
 
 public class CraftingData {
+	
+	public static int CHISEL_ID = 1755;
 
 	// Level Req, Item Id
 	public static UncutGem 
@@ -33,11 +32,5 @@ public class CraftingData {
 	));
 	
 	
-	public static Optional<UncutGem> getGemToCut() {
-		return CraftingData.list.stream()
-		.filter(gem -> gem.levelReqValid())
-		.filter(gem -> Inventory.getCount(gem.getGemId()) > 0)
-		.findFirst();
-	}
 
 }

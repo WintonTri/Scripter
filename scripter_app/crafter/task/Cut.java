@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.tribot.api2007.Interfaces;
 import org.tribot.api2007.Skills;
 import org.tribot.api2007.Skills.SKILLS;
+import org.tribot.script.sdk.GameState;
 import org.tribot.script.sdk.Inventory;
 import org.tribot.script.sdk.MakeScreen;
 import org.tribot.script.sdk.Waiting;
@@ -27,16 +28,16 @@ public class Cut extends Node {
 	public boolean validate() {
 
 		// Tool needed to cut gems
-		if (Inventory.getCount("Chisel") == 0)
+		if (Inventory.getCount(CraftingData.CHISEL_ID) == 0)
 			return false;
 
-		return CraftingData.getGemToCut().isPresent();
+		return getGemToCut().isPresent();
 	}
 
 	@Override
 	public void execute() {
 
-		Optional<UncutGem> gemToCut = CraftingData.getGemToCut();
+		Optional<UncutGem> gemToCut = getGemToCut();
 
 		if (!gemToCut.isPresent())
 			return;
@@ -46,11 +47,11 @@ public class Cut extends Node {
 			return;
 		Interfaces.closeAll();
 
-		int gemId = gemToCut.get().getGemId();
+		int gemId = gemToCut.get().getUncutGemId();
 		int currentLevel = Skills.getActualLevel(SKILLS.CRAFTING);
 
 		Optional<InventoryItem> gem = Query.inventory().idEquals(gemId).findFirst();
-		Optional<InventoryItem> chisel = Query.inventory().nameEquals("Chisel").findFirst();
+		Optional<InventoryItem> chisel = Query.inventory().idEquals(CraftingData.CHISEL_ID).findFirst();
 
 		if (useItems(gem, chisel) && MakeScreen.makeAll(gemId))
 			Waiting.waitUntil(60000, () -> {
@@ -62,11 +63,26 @@ public class Cut extends Node {
 
 	}
 
+	public static Optional<UncutGem> getGemToCut() {
+		return CraftingData.list.stream().filter(gem -> gem.reqsValid())
+				.filter(gem -> Inventory.getCount(gem.getUncutGemId()) > 0).findFirst();
+	}
+
 	private boolean useItems(Optional<InventoryItem> gem, Optional<InventoryItem> chisel) {
 		if (!gem.isPresent() || !chisel.isPresent())
+			return false;
+		if (!deselect())
 			return false;
 		return gem.get().click("Use") && chisel.get().click("Use")
 				&& Waiting.waitUntil(3000, () -> MakeScreen.isOpen());
 	}
 
+	// Deselect any selected item to avoid a script lock up (Thanks to EasyAsPie for letting me know)
+	private boolean deselect() {
+		if (!GameState.isAnyItemSelected())
+			return true;
+		String selectedItemName = GameState.getSelectedItemName();
+		Query.inventory().nameEquals(selectedItemName).findClosestToMouse().ifPresent(c -> c.click("Cancel"));
+		return Waiting.waitUntil(2000, () -> !GameState.isAnyItemSelected());
+	}
 }
