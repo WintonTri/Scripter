@@ -9,7 +9,7 @@ public class RooftopObstacle {
 	private final String name;
 	private final RSTile objectTile;
 	private final RSArea useObjectArea;
-	private TransitionData translate;
+	private PredictedObjectTransition objTransition;
 
 	public RooftopObstacle(final String obstacle, final RSTile objectTile, final RSArea useObjectArea) {
 		this.name = obstacle;
@@ -29,12 +29,12 @@ public class RooftopObstacle {
 		return this.useObjectArea;
 	}
 
-	public TransitionData getTranslate() {
-		return this.translate;
+	public PredictedObjectTransition getTransition() {
+		return this.objTransition;
 	}
 
 	public RooftopObstacle addHover(int x, int y) {
-		translate = new TransitionData(x, y);
+		objTransition = new PredictedObjectTransition(x, y);
 		return this;
 	}
 

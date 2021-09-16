@@ -12,8 +12,8 @@ import org.tribot.api2007.types.RSArea;
 import org.tribot.api2007.types.RSTile;
 
 import scripts.scripter_app.agility.data.RooftopObstacle;
-import scripts.scripter_app.agility.data.TransitionData;
-import scripts.scripter_app.api.WalkingUtil;
+import scripts.scripter_app.api.util.WalkingUtil;
+import scripts.scripter_app.agility.data.PredictedObjectTransition;
 
 public class UtilAgility {
 
@@ -68,16 +68,16 @@ public class UtilAgility {
 	}
 
 	protected boolean waitUntilObjectInteractionComplete(int startHp, int startXp, RooftopObstacle[] courseData,
-			RSArea startArea, TransitionData translateData) {
+			RSArea startArea, PredictedObjectTransition translateData) {
 
 		if (startArea == null)
 			return false;
 
 		if (ABC.shouldRotateCamera()) {
-			TransitionData.adjustToTile(translateData);
+			PredictedObjectTransition.adjustCameraToPredictedTileLocation(translateData);
 		}
 		if (ABC.shouldHover()) {
-			TransitionData.hoverTile(translateData);
+			PredictedObjectTransition.hoverPredictedLocation(translateData);
 		}
 
 		sameTileCount = 0;

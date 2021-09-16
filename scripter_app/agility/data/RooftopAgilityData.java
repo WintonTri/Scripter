@@ -7,11 +7,11 @@ import org.tribot.api2007.Skills.SKILLS;
 import org.tribot.api2007.types.RSArea;
 import org.tribot.api2007.types.RSTile;
 
-import scripts.scripter_app.api.QuestRequirement;
+import scripts.scripter_app.api.SettingRequirement;
 
 public class RooftopAgilityData {
 
-	static QuestRequirement priestInPerilQuestReq = new QuestRequirement(302, 61, false);
+	static SettingRequirement priestInPerilQuestReq = new SettingRequirement(302, 61, false);
 
 	public enum RooftopObstacles {
 
@@ -95,7 +95,7 @@ public class RooftopAgilityData {
 			new RooftopObstacle("Roof top beams" , new RSTile(3316, 3179, 2), new RSArea(new RSTile(3317, 3174, 2), new RSTile(3313, 3179, 2))).addHover(-3, 6),
 			new RooftopObstacle("Tightrope" , new RSTile(3313, 3186, 3), new RSArea(new RSTile(3318, 3180, 3), new RSTile(3312, 3186, 3))).addHover(-2, 6),
 			new RooftopObstacle("Gap" , new RSTile(3300, 3193, 3), new RSArea(new RSTile[] {new RSTile(3301, 3196, 3), new RSTile(3308, 3189, 3), new RSTile(3302, 3184, 3),
-					new RSTile(3296, 3191, 3)})), // minimaps
+					new RSTile(3296, 3191, 3)})), // minimap
 			new RooftopObstacle("Rough wall" , new RSTile(3273, 3195, 0), new RSArea(new RSTile[] {new RSTile(3301, 3195, 0), new RSTile(3298, 3198, 0), new RSTile(3293, 3194, 0),
 					new RSTile(3297, 3191, 0)})).addHover(-1, -10),
 			

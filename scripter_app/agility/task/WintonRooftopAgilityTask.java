@@ -13,10 +13,10 @@ import org.tribot.api2007.types.RSTile;
 import scripts.scripter_app.agility.data.RooftopAgilityData;
 import scripts.scripter_app.agility.data.RooftopAgilityData.RooftopObstacles;
 import scripts.scripter_app.agility.data.RooftopObstacle;
-import scripts.scripter_app.agility.data.TransitionData;
-import scripts.scripter_app.api.ClickingUtil;
-import scripts.scripter_app.api.Util;
-import scripts.scripter_app.api.WalkingUtil;
+import scripts.scripter_app.agility.data.PredictedObjectTransition;
+import scripts.scripter_app.api.util.ClickingUtil;
+import scripts.scripter_app.api.util.Util;
+import scripts.scripter_app.api.util.WalkingUtil;
 
 public class WintonRooftopAgilityTask extends UtilAgility {
 
@@ -31,14 +31,14 @@ public class WintonRooftopAgilityTask extends UtilAgility {
 	public void doTask() {
 		RooftopObstacles obstacleData = RooftopAgilityData.getBestObstacle();
 		RooftopObstacle[] courseData = obstacleData.getCourse();
-		if (isOnCourse(obstacleData)) {
+		if (getOnCourse(obstacleData)) {
 			Util.setRun();
 			interactCourseObjects(courseData);
 			afkIfLowHp();
 		}
 	}
 
-	private boolean isOnCourse(RooftopObstacles obstacleData) {
+	private boolean getOnCourse(RooftopObstacles obstacleData) {
 		RSTile startingTile = obstacleData.getStartTile();
 		RooftopObstacle[] courseData = obstacleData.getCourse();
 		return inAnyArea(courseData) || handleStartTravel(startingTile, courseData);
@@ -49,7 +49,7 @@ public class WintonRooftopAgilityTask extends UtilAgility {
 
 			String objectName = obj.getName();
 			RSTile objectTile = obj.getObjectTile();
-			TransitionData translateData = obj.getTranslate();
+			PredictedObjectTransition translateData = obj.getTransition();
 			RSArea useObjArea = obj.getUseObjectArea();
 
 			if (!useObjArea.contains(Player.getPosition())) {
@@ -80,7 +80,7 @@ public class WintonRooftopAgilityTask extends UtilAgility {
 	private RSObject getObjectToClick(String objectName, RSTile objectTile) {
 		return Arrays.stream(Objects.getAt(objectTile)).filter(obj -> {
 			RSObjectDefinition objDef = obj.getDefinition();
-			String objName = objDef.getName();
+			String objName = objDef == null ? null : objDef.getName();
 			return objName != null && objName.equals(objectName);
 		}).findFirst().orElse(null);
 	}

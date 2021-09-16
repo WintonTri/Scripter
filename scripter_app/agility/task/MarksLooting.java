@@ -7,7 +7,7 @@ import org.tribot.api2007.Inventory;
 import org.tribot.api2007.types.RSArea;
 import org.tribot.api2007.types.RSGroundItem;
 
-import scripts.scripter_app.api.ClickingUtil;
+import scripts.scripter_app.api.util.ClickingUtil;
 
 public class MarksLooting {
 

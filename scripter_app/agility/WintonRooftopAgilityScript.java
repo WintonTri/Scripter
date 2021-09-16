@@ -3,14 +3,15 @@ package scripts.scripter_app.agility;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
+import org.tribot.api.General;
 import org.tribot.script.Script;
 import org.tribot.script.ScriptManifest;
 import org.tribot.script.interfaces.Painting;
 import org.tribot.script.interfaces.Starting;
 
 import scripts.scripter_app.agility.task.WintonRooftopAgilityTask;
-import scripts.scripter_app.api.GraphicsUtil;
-import scripts.scripter_app.api.StartingUtil;
+import scripts.scripter_app.api.util.GraphicsUtil;
+import scripts.scripter_app.api.util.StartingUtil;
 
 @ScriptManifest(authors = { "Winton" }, category = "Agility", name = "Winton's Rooftop Agility")
 public class WintonRooftopAgilityScript extends Script implements Starting, Painting {
@@ -19,6 +20,7 @@ public class WintonRooftopAgilityScript extends Script implements Starting, Pain
 
 	@Override
 	public void run() {
+		General.println(task.canContinue());
 		while (task.canContinue()) {
 			task.doTask();
 		}
