@@ -9,9 +9,6 @@ import scripts.scripter_app.api.framework.Node;
 public class LowHealthFailsafe extends Node {
 
 	int LOW_HP_THRESHHOLD_PERCENT = General.random(15, 20);
-
-	ABCUtil ABC = new ABCUtil();
-
 	int MIN_IN_MILLISECONDS = 60000;
 
 	@Override
