@@ -1,7 +1,6 @@
 package scripts.scripter_app.agility.nodes;
 
 import org.tribot.api.General;
-import org.tribot.api.util.abc.ABCUtil;
 import org.tribot.api2007.Combat;
 
 import scripts.scripter_app.api.framework.Node;
