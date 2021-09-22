@@ -2,7 +2,7 @@ package scripts.scripter_app.crafter.task;
 
 import java.util.Optional;
 
-import org.tribot.script.sdk.Inventory;
+import org.tribot.api2007.Inventory;
 import org.tribot.script.sdk.Log;
 import org.tribot.script.sdk.cache.BankCache;
 import org.tribot.script.sdk.tasks.Amount;

@@ -43,6 +43,7 @@ public class HandleAgilityCourse extends Node {
 		RooftopObstacle[] courseData = obstacleData.getCourse();
 
 		Util.setRun();
+		
 		if (travelToCourse(obstacleData)) {
 			interactCourseObjects(courseData);
 		}

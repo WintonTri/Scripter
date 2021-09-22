@@ -11,7 +11,7 @@ public abstract class Node {
 	public abstract void execute();
 
 	public void log(Object o) {
-		General.println(activity() + " :" + o);
+		General.println(activity() + ": " + o);
 	}
 
 }

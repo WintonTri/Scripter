@@ -13,7 +13,7 @@ public class BankUtil {
 			return true;
 		if (!Bank.isNearby() && !DaxWalker.walkToBank())
 			return false;
-		return Bank.openBank();
+		return Bank.open();
 	}
 
 	public static boolean close() {

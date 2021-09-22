@@ -2,7 +2,6 @@ package scripts.scripter_app.herblore.nodes;
 
 import java.util.Optional;
 
-import org.tribot.api2007.Interfaces;
 import org.tribot.api2007.Inventory;
 import org.tribot.script.sdk.GameState;
 import org.tribot.script.sdk.MakeScreen;
@@ -11,7 +10,7 @@ import org.tribot.script.sdk.query.Query;
 import org.tribot.script.sdk.types.InventoryItem;
 
 import scripts.scripter_app.api.framework.Node;
-import scripts.scripter_app.api.util.BankUtil;
+import scripts.scripter_app.api.util.ClosingUtil;
 import scripts.scripter_app.herblore.data.Herb;
 import scripts.scripter_app.herblore.data.HerbloreData;
 import scripts.scripter_app.herblore.gui.HerbloreGUISettings;
@@ -46,16 +45,15 @@ public class MakeUnfPot extends Node {
 		if (!herbToMix.isPresent())
 			return;
 
-		// Close Ge, ..., Bank interfaces
-		if (!BankUtil.close())
-			return;
-		Interfaces.closeAll();
-
 		int cleanHerbId = herbToMix.get().getCleanId();
 		int unfId = herbToMix.get().getUnfId();
 
 		Optional<InventoryItem> cleanHerb = Query.inventory().idEquals(cleanHerbId).findFirst();
 		Optional<InventoryItem> vialOfWater = Query.inventory().idEquals(HerbloreData.VIAL_OF_WATER_ID).findFirst();
+
+		ClosingUtil.closeInterfaces();
+		if (!deselect())
+			return;
 
 		if (useItems(cleanHerb, vialOfWater) && MakeScreen.makeAll(unfId))
 			Waiting.waitUntil(60000, () -> {

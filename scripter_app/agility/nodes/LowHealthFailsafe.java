@@ -5,6 +5,7 @@ import org.tribot.api2007.Combat;
 
 import scripts.scripter_app.api.framework.Node;
 
+// Afks if the player is low on HitPoints to avoid dying.
 public class LowHealthFailsafe extends Node {
 
 	int LOW_HP_THRESHHOLD_PERCENT = General.random(15, 20);

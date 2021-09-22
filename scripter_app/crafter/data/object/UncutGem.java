@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import org.tribot.api2007.Skills;
 import org.tribot.api2007.Skills.SKILLS;
-import org.tribot.script.sdk.WorldHopper;
+import org.tribot.api2007.WorldHopper;
 import org.tribot.script.sdk.types.definitions.ItemDefinition;
 
 public class UncutGem {
@@ -39,7 +39,7 @@ public class UncutGem {
 	 * @return True if on a members world or members not required, else false.
 	 */
 	private boolean membersReqValid() {
-		boolean onMembersWorld = WorldHopper.isInMembersWorld();
+		boolean onMembersWorld = WorldHopper.isCurrentWorldMembers().orElse(false);
 		Optional<ItemDefinition> itemDef = ItemDefinition.get(this.itemId);
 		boolean isMembersItem = itemDef.isPresent() ? itemDef.get().isMembersOnly() : false;
 		return onMembersWorld || !isMembersItem;

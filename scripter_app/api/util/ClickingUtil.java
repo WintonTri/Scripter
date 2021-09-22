@@ -6,6 +6,9 @@ import org.tribot.api2007.types.RSGroundItem;
 import org.tribot.api2007.types.RSNPC;
 import org.tribot.api2007.types.RSObject;
 import org.tribot.api2007.types.RSTile;
+import org.tribot.script.sdk.GameState;
+import org.tribot.script.sdk.Waiting;
+import org.tribot.script.sdk.query.Query;
 
 public class ClickingUtil {
 
@@ -31,6 +34,14 @@ public class ClickingUtil {
 		if (!clickableTile.isOnScreen() || !clickableTile.isClickable())
 			clickableTile.adjustCameraTo();
 		return clickableTile.isOnScreen() && clickableTile.isClickable();
+	}
+	
+	public static boolean deselect() {
+		if (!GameState.isAnyItemSelected())
+			return true;
+		String selectedItemName = GameState.getSelectedItemName();
+		Query.inventory().nameEquals(selectedItemName).findClosestToMouse().ifPresent(c -> c.click("Cancel"));
+		return Waiting.waitUntil(2000, () -> !GameState.isAnyItemSelected());
 	}
 
 }

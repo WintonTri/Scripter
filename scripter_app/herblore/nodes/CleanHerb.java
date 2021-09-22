@@ -10,6 +10,7 @@ import org.tribot.script.sdk.query.Query;
 import org.tribot.script.sdk.types.InventoryItem;
 
 import scripts.scripter_app.api.framework.Node;
+import scripts.scripter_app.api.util.ClickingUtil;
 import scripts.scripter_app.api.util.ClosingUtil;
 import scripts.scripter_app.herblore.data.Herb;
 import scripts.scripter_app.herblore.data.HerbloreData;
@@ -34,8 +35,6 @@ public class CleanHerb extends Node {
 	public void execute() {
 		log("Execute");
 
-		ClosingUtil.closeInterfaces();
-		
 		Optional<Herb> herbToClean = getHerbToClean();
 		if (herbToClean.isEmpty())
 			return;
@@ -43,6 +42,10 @@ public class CleanHerb extends Node {
 		int grimyHerbId = herbToClean.get().getGrimyId();
 		int startingHerbloreLevel = getHerbloreLv();
 
+		ClosingUtil.closeInterfaces();
+		if (!ClickingUtil.deselect())
+			return;
+		
 		if (cleanHerb(grimyHerbId))
 			waitUntilDoneCleaning(startingHerbloreLevel);
 
@@ -54,7 +57,7 @@ public class CleanHerb extends Node {
 		if (invHerb.isEmpty())
 			return false;
 
-		return invHerb.get().click("Clean");
+		return ClickingUtil.deselect() && invHerb.get().click("Clean");
 	}
 
 	private void waitUntilDoneCleaning(int startingHerbloreLevel) {
